@@ -1,9 +1,12 @@
-import React from 'react'
+import Layout from "../components/Layout";
+import Wallet from "./wallets/view";
 
 function Home() {
   return (
-    <div>Home</div>
-  )
+    <Layout>
+        <Wallet />
+    </Layout>
+  );
 }
 
-export default Home
+export default Home;
