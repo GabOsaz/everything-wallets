@@ -53,12 +53,15 @@ const Sidebar = styled.div`
   left: 0;
 `;
 
-const MenuItem = styled.div<{ active?: boolean; delay: number }>`
+const MenuItem = styled.button<{ active?: boolean; delay: number }>`
   font-size: 18px;
   color: ${(props) => (props.active ? "#000" : "#3E4C59")};
   font-weight: ${(props) => (props.active ? "bold" : "normal")};
   padding: 17px 14px;
   cursor: pointer;
+  text-align: start;
+  border: none;
+  background-color: transparent;
   opacity: 0;
   animation: ${fadeIn} 0.6s ease forwards;
   animation-delay: ${(props) => props.delay}s;
@@ -69,6 +72,8 @@ const MenuItem = styled.div<{ active?: boolean; delay: number }>`
 `;
 
 const ActiveBackground = styled.div`
+  border: none;
+  text-align: start;
   background-color: #f5f7fa;
   border-radius: 3px;
 `;
