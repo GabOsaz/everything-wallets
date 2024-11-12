@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import Avatar from "./home/Avatar";
+import Avatar from "./Avatar";
 import { useEffect, useState } from "react";
 
 const userName = "Oluwatobi Akindunjoye";
