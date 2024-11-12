@@ -14,14 +14,7 @@ const Wallet = () => {
     accounts,
     isFetchingAccounts,
     accountsFetchError,
-    refetchAccounts,
-    wallets,
-    isFetchingWallets,
-    walletsFetchError,
-    refetchWallets,
-    creatingAccount,
-    errorCreatingAccount,
-    createWallet,
+    refetchAccounts
   } = useWalletLogic();
 
   return (
@@ -55,15 +48,9 @@ const Wallet = () => {
       </RenderIf>
 
       <AddWalletModal
-        wallets={wallets}
-        isLoading={creatingAccount}
-        getWalletsErrorMsg={walletsFetchError}
-        refetch={refetchWallets}
-        isFetchingWallets={isFetchingWallets}
+        refetchAccounts={refetchAccounts}
         onClose={handleCloseModal}
         isOpen={isModalOpen}
-        errorCreatingAccount={errorCreatingAccount}
-        createWallet={createWallet}
       />
     </Container>
   );

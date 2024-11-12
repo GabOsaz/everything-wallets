@@ -4,38 +4,45 @@ import { useState } from "react";
 import Button from "../../../components/shared/Button";
 import RenderIf from "../../../utils/RenderIf";
 import ErrorComponent from "../../../components/home/ErrorComponent";
+import useAddWalletModalLogic from "../controller/useAddWalletModalLogic";
+import Loader from "../../../components/shared/Loader";
+import NetworkErrorBadge from "../../../components/shared/NetworkErrorBadge";
 
 function AddWalletModal({
   isOpen,
   onClose,
-  wallets,
-  isLoading,
-  getWalletsErrorMsg,
-  refetch,
-  createWallet,
-  isFetchingWallets,
+  refetchAccounts,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  wallets: any[] | null;
-  isLoading: boolean;
-  getWalletsErrorMsg: string | null;
-  refetch: () => void;
-  errorCreatingAccount: string | null;
-  createWallet: (body: any) => void;
-  isFetchingWallets: boolean;
+  refetchAccounts: () => void;
 }) {
   const [selectedWalletValue, setSelectedWalletValue] = useState("");
+  const {
+    creatingAccount,
+    errorCreatingAccount,
+    createWallet,
+    wallets,
+    isFetchingWallets,
+    walletsFetchError,
+    refetchWallets,
+  } = useAddWalletModalLogic(refetchAccounts, onClose);
 
   return (
     <Modal isOpen={isOpen}>
-      {/* <RenderIf condition={true}> */}
-      <RenderIf condition={!isFetchingWallets && getWalletsErrorMsg === "Network error"}>
+      <RenderIf condition={!isFetchingWallets && walletsFetchError === "Network error"}>
         <ErrorContainer>
-          <ErrorComponent onClick={refetch} isLoading={isFetchingWallets} errorText="Network Error" />
+          <ErrorComponent onClick={refetchWallets} isLoading={isFetchingWallets} errorText="Network Error" />
         </ErrorContainer>
       </RenderIf>
-      <RenderIf condition={!getWalletsErrorMsg && !isFetchingWallets}>
+
+      <RenderIf condition={isFetchingWallets}>
+        <LoaderContainer>
+          <Loader size={83.37} />
+        </LoaderContainer>
+      </RenderIf>
+
+      <RenderIf condition={!walletsFetchError && !isFetchingWallets}>
         <ModalContainer>
           <CloseButton onClick={onClose}>
             <CloseIcon src="/wallet/close-icon.svg" alt="Close Icon" />
@@ -61,12 +68,18 @@ function AddWalletModal({
               <Button
                 loadingText="Creating Wallet..."
                 onClick={() => createWallet({ currency: selectedWalletValue })}
-                isLoading={isLoading}
+                isLoading={creatingAccount}
                 text="Create Wallet"
               />
             </CreateBtnDiv>
           </ModalContent>
         </ModalContainer>
+      </RenderIf>
+
+      <RenderIf condition={!isFetchingWallets && errorCreatingAccount === "Network error"}>
+        <NetwrkErrorContainer>
+          <NetworkErrorBadge />
+        </NetwrkErrorContainer>
       </RenderIf>
     </Modal>
   );
@@ -91,9 +104,9 @@ const ModalContainer = styled.div`
   animation: ${slideDown} 0.3s ease-out, ${fadeIn} 0.3s ease-out;
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled.button.attrs({"aria-label": "Close button"})`
   position: absolute;
-  top: 74px;
+  top: 72px;
   right: 16px;
   background: none;
   border: none;
@@ -101,6 +114,7 @@ const CloseButton = styled.button`
   cursor: pointer;
   color: #000;
   background-color: transparent;
+  border-radius: 4px;
   padding: 4px 6px;
   transform: scale(0.8);
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -144,7 +158,7 @@ const Label = styled.label`
   color: #3e4c59;
 `;
 
-const Select = styled.select`
+const Select = styled.select.attrs({"aria-label": "combobox"})`
   margin-top: 14px;
   padding: 16px 24px;
   padding-right: 30px;
@@ -171,4 +185,16 @@ const CreateBtnDiv = styled.div`
 
 const ErrorContainer = styled.div`
   margin-top: 50%;
+`
+
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 80%;
+`
+
+const NetwrkErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0px 24px;
 `
