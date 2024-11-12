@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "../components/home/Layout";
 import Wallet from "./wallets/view";
 
 function Home() {

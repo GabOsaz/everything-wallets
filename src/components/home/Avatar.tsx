@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-function Avatar({ name }: { name: string }) {
+function Avatar({ name, color }: { name: string, color?: string }) {
   const nameInital = name.charAt(0);
   
-  return <AvataDiv>{nameInital}</AvataDiv>;
+  return <AvataDiv color={color}>{nameInital}</AvataDiv>;
 }
 
 export default Avatar;
 
-const AvataDiv = styled.div`
+const AvataDiv = styled.div<{ color?: string }>`
   width: 36px;
   height: 36px;
   display: flex;
@@ -18,5 +18,5 @@ const AvataDiv = styled.div`
   font-weight: 500;
   font-size: 18px;
   border-radius: 100%;
-  color: #3e4c59;
+  color: ${({ color }) => color ?? "#3e4c59"};
 `;
