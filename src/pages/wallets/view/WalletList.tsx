@@ -48,6 +48,18 @@ const WalletGrid = styled.div`
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 30px;
   margin-top: 24px;
+
+  /* Responsive for medium screens (tablets, iPads, etc.) */
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  /* Responsive for small screens (mobile devices) */
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 `;
 
 const WalletCard = styled.div<{ delay: number }>`
