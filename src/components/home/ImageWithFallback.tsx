@@ -5,22 +5,23 @@ import styled from "styled-components";
 interface ImageWithFallbackT {
   src: string;
   alt: string;
-  fallback: string;
+  fallbackSrc: string;
+  name: string;
   color?: string
 }
 
-const ImageWithFallback = ({ src, alt, fallback, color }: ImageWithFallbackT) => {
+const ImageWithFallback = ({ src, alt, fallbackSrc, name, color }: ImageWithFallbackT) => {
   const [useFallback, setUseFallback] = useState(true);
 
   const handleError = () => {
     setUseFallback(true);
   };
 
-  if (useFallback) {
-    return <Avatar color={color} name={fallback} />;
+  if (useFallback && !fallbackSrc) {
+    return <Avatar color={color} name={name} />;
   }
 
-  return <Icon src={src} alt={alt} onError={handleError} />;
+  return <Icon src={useFallback ? fallbackSrc : src} alt={alt} onError={handleError} />;
 };
 
 export default ImageWithFallback;

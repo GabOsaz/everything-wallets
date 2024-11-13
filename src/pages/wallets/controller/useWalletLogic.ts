@@ -11,22 +11,6 @@ function useWalletLogic() {
     refetch: refetchAccounts,
   } = useGetAccounts();
 
-  // const {
-  //   data: wallets,
-  //   loading: isFetchingWallets,
-  //   error: walletsFetchError,
-  //   refetch: refetchWallets,
-  // } = useGetWallets();
-
-  // const onCreateWalletSuccess = () => {
-  //   refetchAccounts();
-  //   handleCloseModal();
-  // }
-
-  // const {
-  //   loading: creatingAccount, error: errorCreatingAccount, createWallet,
-  // } = useCreateAccount(onCreateWalletSuccess);
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };

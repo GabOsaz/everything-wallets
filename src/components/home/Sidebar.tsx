@@ -15,13 +15,13 @@ const SidebarMenu = () => {
     <Sidebar>
       {menuItems.map((item, index) =>
         item === activeItem ? (
-          <ActiveBackground key={index}>
+          <ActiveBackground key={item}>
             <MenuItem delay={index * 0.1} active onClick={() => handleClick(item)}>
               {item}
             </MenuItem>
           </ActiveBackground>
         ) : (
-          <MenuItem delay={index * 0.1} key={index} onClick={() => handleClick(item)}>
+          <MenuItem delay={index * 0.1} key={item} onClick={() => handleClick(item)}>
             {item}
           </MenuItem>
         )

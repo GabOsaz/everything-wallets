@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import ImageWithFallback from "../../../components/home/ImageWithFallback";
+import returnFallbackLogo from "../../../utils/returnFallbackLogo";
 
 function WalletList({ wallets }: { wallets: any[] | null }) {
   return (
@@ -9,7 +10,8 @@ function WalletList({ wallets }: { wallets: any[] | null }) {
           <WalletHeader>
             <ImageWithFallback
               color="#fff"
-              fallback={wallet.name}
+              fallbackSrc={returnFallbackLogo(wallet.name)}
+              name={wallet.name}
               src={`/${wallet.imgURL}`}
               alt={`${wallet.name} icon`}
             />
