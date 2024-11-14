@@ -14,14 +14,18 @@ const Wallet = () => {
     accounts,
     isFetchingAccounts,
     accountsFetchError,
-    refetchAccounts
+    refetchAccounts,
   } = useWalletLogic();
 
   return (
     <Container>
       <RenderIf condition={accountsFetchError === "Network error"}>
         <ErrorContainer>
-          <ErrorComponent onClick={refetchAccounts} isLoading={isFetchingAccounts} errorText="Network Error" />
+          <ErrorComponent
+            onClick={refetchAccounts}
+            isLoading={isFetchingAccounts}
+            errorText="Network Error"
+          />
         </ErrorContainer>
       </RenderIf>
 
@@ -42,16 +46,17 @@ const Wallet = () => {
 
       <RenderIf condition={!isFetchingAccounts && !accountsFetchError}>
         <>
-          <Hr />
           <WalletList wallets={accounts} />
         </>
       </RenderIf>
 
-      <AddWalletModal
-        refetchAccounts={refetchAccounts}
-        onClose={handleCloseModal}
-        isOpen={isModalOpen}
-      />
+      <RenderIf condition={isModalOpen}>
+        <AddWalletModal
+          refetchAccounts={refetchAccounts}
+          onClose={handleCloseModal}
+          isOpen={isModalOpen}
+        />
+      </RenderIf>
     </Container>
   );
 };
@@ -59,20 +64,34 @@ const Wallet = () => {
 export default Wallet;
 
 const Container = styled.div`
-  margin-top: -30px;
+  margin-top: 0px;
 `;
 
 const TitleRow = styled.div`
+  padding: 0 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0px;
+  border-bottom: 1px solid #d3d5d880;
+  margin-top: -12px;
+  padding-top: 6px;
+  padding-bottom: 8px;
+  position: sticky;
+  top: 60px;
+  left: 0;
+  z-index: 40;
+  background-color: #fff;
 `;
 
-const Title = styled.h2`
-  font-size: 32px;
+const Title = styled.h1`
+  font-size: 20px;
   font-weight: 700;
   color: #000000;
+  line-height: 10px;
+
+  @media (min-width: 1100px) {
+    font-size: 32px;
+  }
 `;
 
 const AddNewWallet = styled.button`
@@ -89,11 +108,6 @@ const AddNewWallet = styled.button`
   }
 `;
 
-const Hr = styled.hr`
-  border: 1px solid #d3d5d880;
-  margin-top: -10px;
-`;
-
 const LoaderContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -103,4 +117,4 @@ const LoaderContainer = styled.div`
 
 const ErrorContainer = styled.div`
   margin-top: 20%;
-`
+`;

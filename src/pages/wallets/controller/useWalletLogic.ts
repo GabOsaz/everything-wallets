@@ -1,15 +1,15 @@
-import { useState } from "react";
-import useGetAccounts from "../model/queries/useGetAccounts";
+import { useContext, useState } from "react";
+import { DataContext } from "../../../appLevelState/DataContext";
 
 function useWalletLogic() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
-    data: accounts,
-    loading: isFetchingAccounts,
-    error: accountsFetchError,
-    refetch: refetchAccounts,
-  } = useGetAccounts();
+    accounts,
+    isFetchingAccounts,
+    accountsFetchError,
+    refetchAccounts,
+  } = useContext(DataContext);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

@@ -1,10 +1,14 @@
+import { useContext, useEffect, useState } from "react";
+import { DataContext } from "../../../appLevelState/DataContext";
 import useCreateAccount from "../model/mutations/useCreateAccount";
 import useGetWallets from "../model/queries/useGetWallets";
 
 function useAddWalletModalLogic(
-  refetchAccounts: () => void,
   handleCloseModal: () => void
 ) {
+  const [selectedWalletValue, setSelectedWalletValue] = useState("");
+  const { setFetchedAccounts } = useContext(DataContext);
+
   const {
     data: wallets,
     loading: isFetchingWallets,
@@ -12,9 +16,22 @@ function useAddWalletModalLogic(
     refetch: refetchWallets,
   } = useGetWallets();
 
-  const onCreateWalletSuccess = () => {
-    refetchAccounts();
+  useEffect(() => {
+    if(wallets?.length) {
+      setSelectedWalletValue(wallets[0].name)
+    }
+    return () => {};
+  }, [wallets]);
+
+  const onCreateWalletSuccess = (res: any) => {
+    const newWallet = {
+      ...res,
+      currency: res?.currency ?? selectedWalletValue,
+      balance: Math.random().toFixed(1),
+      name: selectedWalletValue,
+    }
     handleCloseModal();
+    setFetchedAccounts((initialAccounts: any) => [...initialAccounts, newWallet])
   };
 
   const {
@@ -31,6 +48,8 @@ function useAddWalletModalLogic(
     isFetchingWallets,
     walletsFetchError,
     refetchWallets,
+    selectedWalletValue,
+    setSelectedWalletValue
   };
 }
 

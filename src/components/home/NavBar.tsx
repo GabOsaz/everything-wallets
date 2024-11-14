@@ -1,11 +1,18 @@
 import styled, { keyframes } from "styled-components";
 import Avatar from "./Avatar";
 import { useEffect, useState } from "react";
+import MenuIcon from "../shared/MenuIcon";
 
 const userName = "Oluwatobi Akindunjoye";
 const slideDownDuration = 600;
 
-function NavBar() {
+function NavBar({
+  showMobileSidebar,
+  setShowMobileSidebar,
+}: {
+  showMobileSidebar: boolean;
+  setShowMobileSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [slideComplete, setSlideComplete] = useState(false);
 
   useEffect(() => {
@@ -23,6 +30,8 @@ function NavBar() {
       <UserNameDiv slideComplete={slideComplete}>
         <Avatar name="Oluwatobi" />
         <NameSpan>{userName}</NameSpan>
+        <MenuIcon onClick={() => setShowMobileSidebar(!showMobileSidebar)} isOpen={showMobileSidebar} />
+        {/* <button onClick={() => setShowMobileSidebar(!showMobileSidebar)}>{showMobileSidebar ? "Close" : "Open"}</button> */}
       </UserNameDiv>
     </NavDiv>
   );
@@ -58,8 +67,8 @@ const NavDiv = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 160px;
-  padding-right: 160px;
+  padding-left: 24px;
+  padding-right: 24px;
   padding-top: 14px;
   padding-bottom: 14px;
   background-color: white;
@@ -67,6 +76,21 @@ const NavDiv = styled.nav`
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 50;
+
+  @media (min-width: 968px) {
+    padding-left: 48px;
+    padding-right: 48px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  @media (min-width: 1200px) {
+    padding-left: 160px;
+    padding-right: 160px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
   animation: ${slideDown} ${slideDownDuration} ease forwards;
 `;
 
@@ -75,15 +99,21 @@ const UserNameDiv = styled.div<{ slideComplete: boolean }>`
   gap: 5px;
   align-items: center;
   opacity: 0;
-  animation: ${(props) => (props.slideComplete ? zoomOut : "none")} 0.4s ease forwards;
+  animation: ${(props) => (props.slideComplete ? zoomOut : "none")} 0.4s ease
+    forwards;
   animation-delay: ${slideDownDuration};
 `;
 
 const NameSpan = styled.span`
-  color: #3e4c59;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 14px;
+  display: none;
+
+  @media (min-width: 969px) {
+    display: inline-block;
+    color: #3e4c59;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+  }
 `;
 
 const LogoButton = styled.button<{ slideComplete: boolean }>`
@@ -91,6 +121,7 @@ const LogoButton = styled.button<{ slideComplete: boolean }>`
   cursor: pointer;
   border: none;
   opacity: 0;
-  animation: ${(props) => (props.slideComplete ? zoomOut : "none")} 0.4s ease forwards;
+  animation: ${(props) => (props.slideComplete ? zoomOut : "none")} 0.4s ease
+    forwards;
   animation-delay: ${slideDownDuration};
 `;

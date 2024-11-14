@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 function Avatar({ name, color }: { name: string, color?: string }) {
-  const nameInital = name.charAt(0);
+  const nameInital = name?.charAt(0);
   
   return <AvataDiv color={color}>{nameInital}</AvataDiv>;
 }

@@ -7,21 +7,24 @@ function WalletList({ wallets }: { wallets: any[] | null }) {
     <WalletGrid>
       {wallets?.map((wallet, index) => (
         <WalletCard key={wallet?.id} delay={index * 0.1}>
+
           <WalletHeader>
             <ImageWithFallback
               color="#fff"
-              fallbackSrc={returnFallbackLogo(wallet.name)}
-              name={wallet.name}
-              src={`/${wallet.imgURL}`}
-              alt={`${wallet.name} icon`}
+              fallbackSrc={returnFallbackLogo(wallet?.name)}
+              name={wallet?.name}
+              src={`/${wallet?.imgURL}`}
+              alt={`${wallet?.name} icon`}
             />
-            <WalletName>{wallet.name}</WalletName>
+            <WalletName>{wallet?.name}</WalletName>
           </WalletHeader>
+
           <WalletBalance>
-            {wallet.type === "fiat" && wallet.currency}{" "}
-            {Number(wallet.balance).toLocaleString()}{" "}
-            {wallet.type !== "fiat" && wallet.currency}
+            {wallet?.type === "fiat" && wallet?.currency}{" "}
+            {Number(wallet?.balance).toLocaleString()}{" "}
+            {wallet?.type !== "fiat" && wallet?.currency}
           </WalletBalance>
+
           <ArrowButton>
             <img src="/wallet/chevron-right.svg" alt="Right arrow" />
           </ArrowButton>
@@ -47,33 +50,45 @@ const fadeInDown = keyframes`
 const WalletGrid = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 30px;
   margin-top: 24px;
+  margin-bottom: 24px;
+  justify-content: center;
+  justify-items: center;
 
-  /* Responsive for medium screens (tablets, iPads, etc.) */
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (max-width: 1744px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
+    justify-items: center;
   }
 
-  /* Responsive for small screens (mobile devices) */
-  @media (max-width: 768px) {
+  @media (max-width: 1424px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    justify-items: center;
+  }
+
+  @media (max-width: 860px) {
     grid-template-columns: 1fr;
     gap: 15px;
+    justify-items: center;
   }
 `;
 
 const WalletCard = styled.div<{ delay: number }>`
   width: 230px;
   height: 150px;
+  margin-block-start: 0;
+  margin-block-end: 0;
   padding: 20px;
   background-color: #111111;
-  background-image: url("/wallet/card-svg.svg");
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: bottom;
+  background-image: url("/wallet/card-svg.svg"), url("/wallet/card-svg2.svg")
+  ;
+  background-size: 100%, 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, 60%;
+  background-position: bottom 50px, 35% -90%;
   border-radius: 10px;
   color: #fff;
   display: flex;
@@ -87,6 +102,10 @@ const WalletCard = styled.div<{ delay: number }>`
 
   &:hover {
     transform: scale(1.2);
+  }
+
+  @media (max-width: 1744px) {
+    width: 220px;
   }
 `;
 

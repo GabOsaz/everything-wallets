@@ -1,6 +1,5 @@
 import styled, { keyframes } from "styled-components";
 import Modal from "../../../components/shared/Modal";
-import { useState } from "react";
 import Button from "../../../components/shared/Button";
 import RenderIf from "../../../utils/RenderIf";
 import ErrorComponent from "../../../components/home/ErrorComponent";
@@ -17,7 +16,6 @@ function AddWalletModal({
   onClose: () => void;
   refetchAccounts: () => void;
 }) {
-  const [selectedWalletValue, setSelectedWalletValue] = useState("");
   const {
     creatingAccount,
     errorCreatingAccount,
@@ -26,7 +24,9 @@ function AddWalletModal({
     isFetchingWallets,
     walletsFetchError,
     refetchWallets,
-  } = useAddWalletModalLogic(refetchAccounts, onClose);
+    selectedWalletValue,
+    setSelectedWalletValue,
+  } = useAddWalletModalLogic(onClose);
 
   return (
     <Modal isOpen={isOpen}>
@@ -55,6 +55,7 @@ function AddWalletModal({
             </Description>
             <Label>Select wallet</Label>
             <Select
+              placeholder="Select currency"
               value={selectedWalletValue}
               onChange={(e) => setSelectedWalletValue(e.target.value)}
             >

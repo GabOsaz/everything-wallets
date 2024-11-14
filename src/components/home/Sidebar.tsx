@@ -16,12 +16,20 @@ const SidebarMenu = () => {
       {menuItems.map((item, index) =>
         item === activeItem ? (
           <ActiveBackground key={item}>
-            <MenuItem delay={index * 0.1} active onClick={() => handleClick(item)}>
+            <MenuItem
+              delay={index * 0.1}
+              active
+              onClick={() => handleClick(item)}
+            >
               {item}
             </MenuItem>
           </ActiveBackground>
         ) : (
-          <MenuItem delay={index * 0.1} key={item} onClick={() => handleClick(item)}>
+          <MenuItem
+            delay={index * 0.1}
+            key={item}
+            onClick={() => handleClick(item)}
+          >
             {item}
           </MenuItem>
         )
@@ -45,7 +53,6 @@ const fadeIn = keyframes`
 
 const Sidebar = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   width: 240px;
   position: sticky;
@@ -72,8 +79,13 @@ const MenuItem = styled.button<{ active?: boolean; delay: number }>`
 `;
 
 const ActiveBackground = styled.div`
-  border: none;
-  text-align: start;
-  background-color: #f5f7fa;
-  border-radius: 3px;
+  background-color: transparent;
+
+  @media (min-width: 969px) {
+    border: none;
+    text-align: start;
+    width: 100%;
+    background-color: #f5f7fa;
+    border-radius: 3px;
+  }
 `;
