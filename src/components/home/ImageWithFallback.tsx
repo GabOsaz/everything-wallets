@@ -18,7 +18,7 @@ const ImageWithFallback = ({ src, alt, fallbackSrc, name, color }: ImageWithFall
   };
 
   if (useFallback && !fallbackSrc) {
-    return <Avatar color={color} name={name} />;
+    return <Avatar size="34px" color={color} name={name} />;
   }
 
   return <Icon src={useFallback ? fallbackSrc : src} alt={alt} onError={handleError} />;
@@ -27,6 +27,6 @@ const ImageWithFallback = ({ src, alt, fallbackSrc, name, color }: ImageWithFall
 export default ImageWithFallback;
 
 const Icon = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
 `;

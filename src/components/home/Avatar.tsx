@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-function Avatar({ name, color }: { name: string, color?: string }) {
+function Avatar({ name, color, size }: { name: string, color?: string, size?: string }) {
   const nameInital = name?.charAt(0);
   
-  return <AvataDiv color={color}>{nameInital}</AvataDiv>;
+  return <AvataDiv size={size} color={color}>{nameInital}</AvataDiv>;
 }
 
 export default Avatar;
 
-const AvataDiv = styled.div<{ color?: string }>`
-  width: 36px;
-  height: 36px;
+const AvataDiv = styled.div<{ color?: string, size?: string }>`
+  width: ${({ size }) => size ?? "36px"};
+  height: ${({ size }) => size ?? "36px"};;
   display: flex;
   justify-content: center;
   align-items: center;
